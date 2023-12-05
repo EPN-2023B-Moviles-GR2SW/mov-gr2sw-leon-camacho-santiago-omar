@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="text">land EN</string>
+    <color name="colorText">#FFBB86FC</color>
+    <color name="colorBackground">#FF3700B3</color>
+</resources>

@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">B2023gr2sw</string>
     <string name="title_activity_aresources">AResources</string>
-    <string name="saludo">Buenos dias</string>
+    <string name="text">Esto es texto</string>
+    <color name="colorText">#FFBB86FC</color>
+    <color name="colorBackground">#FF3700B3</color>
 </resources>
