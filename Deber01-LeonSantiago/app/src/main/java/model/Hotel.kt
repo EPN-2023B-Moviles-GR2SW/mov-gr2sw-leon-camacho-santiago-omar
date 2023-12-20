@@ -1,7 +1,6 @@
 package model
 
 data class Hotel(
-    val id: Int,
     val nombre: String,
     val ubicacion: String,
     val calificacion: Float,
