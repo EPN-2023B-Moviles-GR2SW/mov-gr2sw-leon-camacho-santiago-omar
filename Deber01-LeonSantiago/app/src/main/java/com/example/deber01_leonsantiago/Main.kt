@@ -3,6 +3,7 @@ package com.example.deber01_leonsantiago
 import manager.HotelManager
 import manager.ReservaManager
 
+/*
 fun main() {
     val hotelManager = HotelManager()
     val reservaManager = ReservaManager()
@@ -70,4 +71,10 @@ fun main() {
             else -> println("Opción no válida.")
         }
     }
+}
+
+*/
+
+fun main() {
+    
 }
