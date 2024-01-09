@@ -4,4 +4,9 @@
     <string name="text">Esto es texto</string>
     <color name="colorText">#FFBB86FC</color>
     <color name="colorBackground">#FF3700B3</color>
+    <string-array name="string_array_opciones_dialogo">
+        <item>Lunes</item>
+        <item>Martes</item>
+        <item>Miercoles</item>
+    </string-array>
 </resources>
