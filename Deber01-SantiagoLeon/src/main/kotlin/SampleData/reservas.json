@@ -1,18 +1,10 @@
 [
   {
     "id": 1,
-    "cliente": "Santiago",
+    "cliente": "Updated Client",
     "fechaEntrada": "2024-05-12",
-    "fechaSalida": "2024-05-18",
+    "fechaSalida": "2024-05-20",
     "numeroPersonas": 5,
-    "esCancelable": true
-  },
-  {
-    "id": 2,
-    "cliente": "Jose",
-    "fechaEntrada": "2024-02-05",
-    "fechaSalida": "2024-02-19",
-    "numeroPersonas": 7,
     "esCancelable": true
   },
   {
@@ -30,5 +22,21 @@
     "fechaSalida": "2024-07-21",
     "numeroPersonas": 1,
     "esCancelable": false
+  },
+  {
+    "id": 5,
+    "cliente": "Test Client",
+    "fechaEntrada": "2024-08-01",
+    "fechaSalida": "2024-08-10",
+    "numeroPersonas": 3,
+    "esCancelable": true
+  },
+  {
+    "id": 5,
+    "cliente": "Test Client",
+    "fechaEntrada": "2024-08-01",
+    "fechaSalida": "2024-08-10",
+    "numeroPersonas": 3,
+    "esCancelable": true
   }
 ]
