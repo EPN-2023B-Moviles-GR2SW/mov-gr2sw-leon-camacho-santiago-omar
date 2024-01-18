@@ -9,5 +9,6 @@ data class Reserva(
     @SerializedName("fechaEntrada") val fechaEntrada: Date,
     @SerializedName("fechaSalida") val fechaSalida: Date,
     @SerializedName("numeroPersonas") val numeroPersonas: Int,
-    @SerializedName("esCancelable") val esCancelable: Boolean
+    @SerializedName("esCancelable") val esCancelable: Boolean,
+    @SerializedName("hotelId") val hotelId: Int
 )

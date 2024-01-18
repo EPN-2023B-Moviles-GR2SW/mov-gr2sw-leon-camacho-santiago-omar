@@ -60,4 +60,12 @@ class ReservaDAO {
         val reservas = getAllReservas()
         return reservas.find { it.id == id }
     }
+
+    fun getReservationsByHotelId(hotelId: Int): List<Reserva> {
+        val fileReader = FileReader(filePath)
+        val typeToken = object : TypeToken<List<Reserva>>() {}.type
+        val allReservas = gson.fromJson<List<Reserva>>(fileReader, typeToken) ?: emptyList()
+
+        return allReservas.filter { it.hotelId == hotelId }
+    }
 }

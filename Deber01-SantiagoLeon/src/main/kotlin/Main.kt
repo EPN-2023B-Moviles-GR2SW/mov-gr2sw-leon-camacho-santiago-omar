@@ -1,34 +1,43 @@
+import models.dao.HotelDAO
 import models.entities.Reserva
 import models.dao.ReservaDAO
+import models.entities.Hotel
 import java.text.SimpleDateFormat
 
 fun main(args: Array<String>){
     val reservaDAO = ReservaDAO()
+    val hotelDAO = HotelDAO(reservaDAO)
     val dateFormat = SimpleDateFormat("yyyy-MM-dd")
 
-    // Test getAllReservas
-    println("Testing getAllReservas:")
-    reservaDAO.getAllReservas().forEach { println(it) }
+    // Test getAllHotels
+    println("Testing getAllHotels:")
+    hotelDAO.getAllHotels().forEach { println(it) }
 
-    // Test saveReserva
-    println("\nTesting saveReserva:")
-    val newReserva = Reserva(5, "Test Client", dateFormat.parse("2024-08-01"), dateFormat.parse("2024-08-10"), 3, true)
-    reservaDAO.saveReserva(newReserva)
-    reservaDAO.getAllReservas().forEach { println(it) }
+    // Test saveHotel
+    println("\nTesting saveHotel:")
+    val newHotel = Hotel(201, "Test Hotel", "123 Test Street", 4.0, true, mutableListOf())
+    hotelDAO.saveHotel(newHotel)
+    hotelDAO.getAllHotels().forEach { println(it) }
 
-    // Test updateReserva
-    println("\nTesting updateReserva:")
-    val updatedReserva = Reserva(1, "Updated Client", dateFormat.parse("2024-05-12"), dateFormat.parse("2024-05-20"), 5, true)
-    reservaDAO.updateReserva(1, updatedReserva)
-    reservaDAO.getAllReservas().forEach { println(it) }
+    // Test updateHotel
+    println("\nTesting updateHotel:")
+    val updatedHotel = Hotel(201, "Updated Hotel", "123 Updated Street", 4.5, true, mutableListOf())
+    hotelDAO.updateHotel(updatedHotel)
+    hotelDAO.getAllHotels().forEach { println(it) }
 
-    // Test deleteReserva
-    println("\nTesting deleteReserva:")
-    reservaDAO.deleteReserva(2)
-    reservaDAO.getAllReservas().forEach { println(it) }
+    // Test deleteHotel
+    println("\nTesting deleteHotel:")
+    hotelDAO.deleteHotel(201)
+    hotelDAO.getAllHotels().forEach { println(it) }
 
-    // Test findReservaById
-    println("\nTesting findReservaById:")
-    val foundReserva = reservaDAO.findReservaById(3)
-    println(foundReserva ?: "Reserva no encontrada.")
+    // Test findHotelById
+    println("\nTesting findHotelById:")
+    val foundHotel = hotelDAO.findHotelById(101)
+    println(foundHotel ?: "Hotel no encontrado.")
+
+    // Optionally, test the loading of reservations for a specific hotel
+    // This requires that reservaDAO and Reservas.json are correctly set up
+    println("\nTesting loadReservationsForHotel (for Hotel ID 101):")
+    val reservationsForHotel = hotelDAO.loadReservationsForHotel(101)
+    reservationsForHotel.forEach { println(it) }
 }
