@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat
 import java.text.ParseException
 import java.util.*
 
-class ReservaController(private val reservaDAO: ReservaDAO) {
+class ReservaController(private val reservaDAO: ReservaDAO, private val hotelController: HotelController) {
 
     private val dateFormat = SimpleDateFormat("yyyy-MM-dd")
 
@@ -29,7 +29,11 @@ class ReservaController(private val reservaDAO: ReservaDAO) {
         hotelId: Int
     ): Reserva? {
         try {
-            val dateFormat = SimpleDateFormat("yyyy-MM-dd")
+            val hotelExists = hotelController.getHotel(hotelId) != null
+            if (!hotelExists) {
+                throw IllegalArgumentException("No existe un hotel con el ID proporcionado: $hotelId")
+            }
+
             val fechaEntrada: Date = dateFormat.parse(fechaEntradaString)
             val fechaSalida: Date = dateFormat.parse(fechaSalidaString)
 
