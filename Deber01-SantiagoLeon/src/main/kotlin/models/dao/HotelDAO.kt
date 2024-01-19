@@ -18,7 +18,6 @@ class HotelDAO(private val reservaDAO: ReservaDAO) {
         .create()
 
     private val hotelsFilePath = "src/main/kotlin/SampleData/hoteles.json"
-    private val reservasFilePath = "src/main/kotlin/SampleData/reservas.json"
 
     fun getAllHotels(): List<Hotel> {
         val fileReader = FileReader(hotelsFilePath)
