@@ -61,5 +61,14 @@
     "numeroPersonas": 3,
     "esCancelable": true,
     "hotelId": 101
+  },
+  {
+    "id": 10,
+    "cliente": "gonzalo",
+    "fechaEntrada": "2024-08-13",
+    "fechaSalida": "2034-08-13",
+    "numeroPersonas": 5,
+    "esCancelable": false,
+    "hotelId": 101
   }
 ]

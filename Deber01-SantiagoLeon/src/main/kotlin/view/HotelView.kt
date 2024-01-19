@@ -50,9 +50,9 @@ class HotelView(private val hotelController: HotelController) {
         print("¿Tiene estacionamiento? (true/false): ")
         val tieneEstacionamiento = readLine()?.toBoolean() ?: return
 
-        val success = hotelController.createHotel(id, nombre, direccion, calificacion, tieneEstacionamiento)
-        if (success) {
-            println("Hotel creado con éxito.")
+        val hotel = hotelController.createHotel(id, nombre, direccion, calificacion, tieneEstacionamiento)
+        if (hotel) {
+            println("Hotel creado con éxito: $hotel")
         } else {
             println("No se pudo crear el hotel.")
         }
@@ -72,9 +72,9 @@ class HotelView(private val hotelController: HotelController) {
         print("¿Tiene estacionamiento? (true/false): ")
         val tieneEstacionamiento = readLine()?.toBoolean() ?: return
 
-        val success = hotelController.updateHotel(id, nombre, direccion, calificacion, tieneEstacionamiento)
-        if (success) {
-            println("Hotel actualizado con éxito.")
+        val updatedHotel = hotelController.updateHotel(id, nombre, direccion, calificacion, tieneEstacionamiento)
+        if (updatedHotel) {
+            println("Hotel actualizado con éxito: $updatedHotel")
         } else {
             println("No se pudo actualizar el hotel.")
         }
