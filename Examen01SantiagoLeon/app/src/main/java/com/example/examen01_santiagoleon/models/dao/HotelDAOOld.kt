@@ -10,7 +10,7 @@ import java.io.FileReader
 import java.io.FileWriter
 import java.util.*
 
-class HotelDAO(private val reservaDAO: ReservaDAO) {
+class HotelDAOOld(private val reservaDAOOld: ReservaDAOOld) {
 
     private val gson = GsonBuilder()
         .registerTypeAdapter(Date::class.java, DateSerializer())
@@ -57,7 +57,7 @@ class HotelDAO(private val reservaDAO: ReservaDAO) {
     }
 
     fun loadReservationsForHotel(hotelId: Int): MutableList<Reserva> {
-        val reservaDAO = ReservaDAO()
-        return reservaDAO.getReservationsByHotelId(hotelId).toMutableList()
+        val reservaDAOOld = ReservaDAOOld()
+        return reservaDAOOld.getReservationsByHotelId(hotelId).toMutableList()
     }
 }

@@ -9,7 +9,7 @@ import java.io.FileReader
 import java.io.FileWriter
 import java.util.Date
 
-class ReservaDAO {
+class ReservaDAOOld {
     private val gson = GsonBuilder()
         .registerTypeAdapter(Date::class.java, DateSerializer())
         .registerTypeAdapter(Date::class.java, DateDeserializer())

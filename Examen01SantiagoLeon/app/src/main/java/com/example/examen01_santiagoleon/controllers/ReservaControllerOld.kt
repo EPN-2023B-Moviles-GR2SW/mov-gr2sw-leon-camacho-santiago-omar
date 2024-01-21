@@ -1,18 +1,18 @@
 package controllers
 
-import models.dao.ReservaDAO
+import models.dao.ReservaDAOOld
 import com.example.examen01_santiagoleon.models.entities.Reserva
 import java.text.SimpleDateFormat
 import java.text.ParseException
 import java.util.*
 
-class ReservaController(private val reservaDAO: ReservaDAO, private val hotelController: HotelController) {
+class ReservaControllerOld(private val reservaDAOOld: ReservaDAOOld, private val hotelControllerOld: HotelControllerOld) {
 
     private val dateFormat = SimpleDateFormat("yyyy-MM-dd")
 
     fun readAllReservas(): List<Reserva> {
         return try {
-            reservaDAO.getAllReservas()
+            reservaDAOOld.getAllReservas()
         } catch (e: Exception) {
             println("Error al leer las reservas: ${e.message}")
             emptyList()
@@ -29,7 +29,7 @@ class ReservaController(private val reservaDAO: ReservaDAO, private val hotelCon
         hotelId: Int
     ): Reserva? {
         try {
-            val hotelExists = hotelController.getHotel(hotelId) != null
+            val hotelExists = hotelControllerOld.getHotel(hotelId) != null
             if (!hotelExists) {
                 throw IllegalArgumentException("No existe un hotel con el ID proporcionado: $hotelId")
             }
@@ -42,7 +42,7 @@ class ReservaController(private val reservaDAO: ReservaDAO, private val hotelCon
             }
 
             val newReserva = Reserva(id, cliente, fechaEntrada, fechaSalida, numeroPersonas, esCancelable, hotelId)
-            reservaDAO.saveReserva(newReserva)
+            reservaDAOOld.saveReserva(newReserva)
             return newReserva
         } catch (e: ParseException) {
             println("Error en el formato de fecha: ${e.message}")
@@ -72,7 +72,7 @@ class ReservaController(private val reservaDAO: ReservaDAO, private val hotelCon
             }
 
             val updatedReserva = Reserva(id, cliente, fechaEntrada, fechaSalida, numeroPersonas, esCancelable, hotelId)
-            reservaDAO.updateReserva(id, updatedReserva)
+            reservaDAOOld.updateReserva(id, updatedReserva)
             return updatedReserva
         } catch (e: ParseException) {
             println("Error en el formato de fecha: ${e.message}")
@@ -86,7 +86,7 @@ class ReservaController(private val reservaDAO: ReservaDAO, private val hotelCon
 
     fun deleteReserva(id: Int): Boolean {
         return try {
-            reservaDAO.deleteReserva(id)
+            reservaDAOOld.deleteReserva(id)
             true
         } catch (e: NoSuchElementException) {
             println("No se encontró una reserva con ID: $id")
@@ -99,7 +99,7 @@ class ReservaController(private val reservaDAO: ReservaDAO, private val hotelCon
 
     fun getReserva(id: Int): Reserva? {
         return try {
-            reservaDAO.findReservaById(id) ?: throw NoSuchElementException("No se encontró una reserva con ID: $id")
+            reservaDAOOld.findReservaById(id) ?: throw NoSuchElementException("No se encontró una reserva con ID: $id")
         } catch (e: NoSuchElementException) {
             println(e.message)
             null
@@ -111,7 +111,7 @@ class ReservaController(private val reservaDAO: ReservaDAO, private val hotelCon
 
     fun getReservationsByHotelId(hotelId: Int): List<Reserva> {
         return try {
-            reservaDAO.getReservationsByHotelId(hotelId)
+            reservaDAOOld.getReservationsByHotelId(hotelId)
         } catch (e: Exception) {
             println("Error al obtener reservas para el hotel con ID: $hotelId, Error: ${e.message}")
             emptyList()

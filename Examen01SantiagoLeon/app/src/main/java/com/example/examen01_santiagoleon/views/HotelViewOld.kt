@@ -1,8 +1,8 @@
 package view
 
-import controllers.HotelController
+import controllers.HotelControllerOld
 
-class HotelView(private val hotelController: HotelController) {
+class HotelViewOld(private val hotelControllerOld: HotelControllerOld) {
 
     fun showMenu() {
         while (true) {
@@ -31,7 +31,7 @@ class HotelView(private val hotelController: HotelController) {
     }
 
     private fun viewAllHotels() {
-        val hotels = hotelController.getAllHotels()
+        val hotels = hotelControllerOld.getAllHotels()
         hotels.forEach { println(it) }
     }
 
@@ -48,7 +48,7 @@ class HotelView(private val hotelController: HotelController) {
         print("¿Tiene estacionamiento? (true/false): ")
         val tieneEstacionamiento = readLine()?.toBoolean() ?: return
 
-        val hotel = hotelController.createHotel(id, nombre, direccion, calificacion, tieneEstacionamiento)
+        val hotel = hotelControllerOld.createHotel(id, nombre, direccion, calificacion, tieneEstacionamiento)
         if (hotel) {
             println("Hotel creado con éxito: $hotel")
         } else {
@@ -70,7 +70,7 @@ class HotelView(private val hotelController: HotelController) {
         print("¿Tiene estacionamiento? (true/false): ")
         val tieneEstacionamiento = readLine()?.toBoolean() ?: return
 
-        val updatedHotel = hotelController.updateHotel(id, nombre, direccion, calificacion, tieneEstacionamiento)
+        val updatedHotel = hotelControllerOld.updateHotel(id, nombre, direccion, calificacion, tieneEstacionamiento)
         if (updatedHotel) {
             println("Hotel actualizado con éxito: $updatedHotel")
         } else {
@@ -83,7 +83,7 @@ class HotelView(private val hotelController: HotelController) {
         print("Ingrese el ID del hotel a eliminar: ")
         val id = readLine()?.toIntOrNull() ?: return
 
-        val success = hotelController.deleteHotel(id)
+        val success = hotelControllerOld.deleteHotel(id)
         if (success) {
             println("Hotel eliminado con éxito.")
         } else {
@@ -96,7 +96,7 @@ class HotelView(private val hotelController: HotelController) {
         print("Ingrese el ID del hotel: ")
         val id = readLine()?.toIntOrNull() ?: return
 
-        val hotel = hotelController.getHotel(id)
+        val hotel = hotelControllerOld.getHotel(id)
         if (hotel != null) {
             println("Detalles del hotel: $hotel")
         } else {
@@ -109,7 +109,7 @@ class HotelView(private val hotelController: HotelController) {
         print("Ingrese el ID del hotel: ")
         val hotelId = readLine()?.toIntOrNull() ?: return
 
-        val reservas = hotelController.loadReservationsForHotel(hotelId)
+        val reservas = hotelControllerOld.loadReservationsForHotel(hotelId)
         if (reservas.isNotEmpty()) {
             reservas.forEach { println(it) }
         } else {

@@ -1,20 +1,20 @@
 package controllers
 
-import view.HotelView
-import view.ReservaView
+import view.HotelViewOld
+import view.ReservaViewOld
 
-class MenuController(
-    private val hotelView: HotelView,
-    private val reservaView: ReservaView
+class MenuControllerOld(
+    private val hotelViewOld: HotelViewOld,
+    private val reservaViewOld: ReservaViewOld
 ) {
     fun processSelection(selection: Int): Boolean {
         return when (selection) {
             1 -> {
-                hotelView.showMenu()
+                hotelViewOld.showMenu()
                 true
             }
             2 -> {
-                reservaView.showMenu()
+                reservaViewOld.showMenu()
                 true
             }
             3 -> false

@@ -1,8 +1,8 @@
 package view
 
-import controllers.ReservaController
+import controllers.ReservaControllerOld
 
-class ReservaView(private val reservaController: ReservaController) {
+class ReservaViewOld(private val reservaControllerOld: ReservaControllerOld) {
 
     fun showMenu() {
         while (true) {
@@ -31,7 +31,7 @@ class ReservaView(private val reservaController: ReservaController) {
     }
 
     private fun viewAllReservas() {
-        val reservas = reservaController.readAllReservas()
+        val reservas = reservaControllerOld.readAllReservas()
         reservas.forEach { println(it) }
     }
 
@@ -52,7 +52,7 @@ class ReservaView(private val reservaController: ReservaController) {
         print("ID del hotel: ")
         val hotelId = readLine()?.toIntOrNull() ?: return
 
-        val reserva = reservaController.createReserva(id, cliente, fechaEntrada, fechaSalida, numeroPersonas, esCancelable, hotelId)
+        val reserva = reservaControllerOld.createReserva(id, cliente, fechaEntrada, fechaSalida, numeroPersonas, esCancelable, hotelId)
         if (reserva != null) {
             println("Reserva creada con éxito: $reserva")
         } else {
@@ -78,7 +78,7 @@ class ReservaView(private val reservaController: ReservaController) {
         print("ID del hotel: ")
         val hotelId = readLine()?.toIntOrNull() ?: return
 
-        val updatedReserva = reservaController.updateReserva(id, cliente, fechaEntrada, fechaSalida, numeroPersonas, esCancelable, hotelId)
+        val updatedReserva = reservaControllerOld.updateReserva(id, cliente, fechaEntrada, fechaSalida, numeroPersonas, esCancelable, hotelId)
         if (updatedReserva != null) {
             println("Reserva actualizada con éxito: $updatedReserva")
         } else {
@@ -91,7 +91,7 @@ class ReservaView(private val reservaController: ReservaController) {
         print("Ingrese el ID de la reserva a eliminar: ")
         val id = readLine()?.toIntOrNull() ?: return
 
-        val success = reservaController.deleteReserva(id)
+        val success = reservaControllerOld.deleteReserva(id)
         if (success) {
             println("Reserva eliminada con éxito.")
         } else {
@@ -104,7 +104,7 @@ class ReservaView(private val reservaController: ReservaController) {
         print("Ingrese el ID de la reserva: ")
         val id = readLine()?.toIntOrNull() ?: return
 
-        val reserva = reservaController.getReserva(id)
+        val reserva = reservaControllerOld.getReserva(id)
         if (reserva != null) {
             println("Detalles de la reserva: $reserva")
         } else {
@@ -117,7 +117,7 @@ class ReservaView(private val reservaController: ReservaController) {
         print("Ingrese el ID del hotel: ")
         val hotelId = readLine()?.toIntOrNull() ?: return
 
-        val reservas = reservaController.getReservationsByHotelId(hotelId)
+        val reservas = reservaControllerOld.getReservationsByHotelId(hotelId)
         if (reservas.isNotEmpty()) {
             reservas.forEach { println(it) }
         } else {
