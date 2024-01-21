@@ -8,7 +8,7 @@ data class Hotel(
     val direccion: String,
     val calificacion: Double,
     val tieneEstacionamiento: Boolean,
-    val reservas: MutableList<Reserva>
+    val reservas: MutableList<Reserva>?
 ) {
     override fun toString(): String {
         return "\n\nid: ${id}, " +

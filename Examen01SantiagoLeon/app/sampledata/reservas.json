@@ -1,0 +1,74 @@
+[
+  {
+    "id": 1,
+    "cliente": "Updated Client",
+    "fechaEntrada": "2024-05-12",
+    "fechaSalida": "2024-05-20",
+    "numeroPersonas": 5,
+    "esCancelable": true,
+    "hotelId": 103
+  },
+  {
+    "id": 3,
+    "cliente": "Ricardo",
+    "fechaEntrada": "2024-02-16",
+    "fechaSalida": "2024-03-15",
+    "numeroPersonas": 2,
+    "esCancelable": false,
+    "hotelId": 101
+  },
+  {
+    "id": 4,
+    "cliente": "Omar",
+    "fechaEntrada": "2024-07-09",
+    "fechaSalida": "2024-07-21",
+    "numeroPersonas": 1,
+    "esCancelable": false,
+    "hotelId": 102
+  },
+  {
+    "id": 7,
+    "cliente": "Test Client",
+    "fechaEntrada": "2024-08-01",
+    "fechaSalida": "2024-08-10",
+    "numeroPersonas": 3,
+    "esCancelable": true,
+    "hotelId": 103
+  },
+  {
+    "id": 8,
+    "cliente": "Test Client",
+    "fechaEntrada": "2024-08-01",
+    "fechaSalida": "2024-08-10",
+    "numeroPersonas": 3,
+    "esCancelable": true,
+    "hotelId": 103
+  },
+  {
+    "id": 9,
+    "cliente": "Test Client",
+    "fechaEntrada": "2024-08-01",
+    "fechaSalida": "2024-08-10",
+    "numeroPersonas": 3,
+    "esCancelable": true,
+    "hotelId": 101
+  },
+  {
+    "id": 5,
+    "cliente": "Test Client",
+    "fechaEntrada": "2024-08-01",
+    "fechaSalida": "2024-08-10",
+    "numeroPersonas": 3,
+    "esCancelable": true,
+    "hotelId": 101
+  },
+  {
+    "id": 10,
+    "cliente": "gonzalo",
+    "fechaEntrada": "2024-08-13",
+    "fechaSalida": "2034-08-13",
+    "numeroPersonas": 5,
+    "esCancelable": false,
+    "hotelId": 101
+  }
+]

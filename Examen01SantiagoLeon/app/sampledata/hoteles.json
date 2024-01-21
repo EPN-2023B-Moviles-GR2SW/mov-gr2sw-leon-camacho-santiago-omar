@@ -1,0 +1,100 @@
+[
+  {
+    "id": 101,
+    "nombre": "Hotel Sunshine",
+    "direccion": "123 Sunny Street",
+    "calificacion": 4.5,
+    "tieneEstacionamiento": true,
+    "reservas": [
+      {
+        "id": 3,
+        "cliente": "Ricardo",
+        "fechaEntrada": "2024-02-16",
+        "fechaSalida": "2024-03-15",
+        "numeroPersonas": 2,
+        "esCancelable": false,
+        "hotelId": 101
+      },
+      {
+        "id": 9,
+        "cliente": "Test Client",
+        "fechaEntrada": "2024-08-01",
+        "fechaSalida": "2024-08-10",
+        "numeroPersonas": 3,
+        "esCancelable": true,
+        "hotelId": 101
+      },
+      {
+        "id": 5,
+        "cliente": "Test Client",
+        "fechaEntrada": "2024-08-01",
+        "fechaSalida": "2024-08-10",
+        "numeroPersonas": 3,
+        "esCancelable": true,
+        "hotelId": 101
+      }
+    ]
+  },
+  {
+    "id": 102,
+    "nombre": "Hotel Ejemplo",
+    "direccion": "Calle ejemplo",
+    "calificacion": 4.8,
+    "tieneEstacionamiento": false,
+    "reservas": [
+      {
+        "id": 4,
+        "cliente": "Omar",
+        "fechaEntrada": "2024-07-09",
+        "fechaSalida": "2024-07-21",
+        "numeroPersonas": 1,
+        "esCancelable": false,
+        "hotelId": 102
+      }
+    ]
+  },
+  {
+    "id": 103,
+    "nombre": "Hotel Playita",
+    "direccion": "123 St Bakers Street",
+    "calificacion": 3.9,
+    "tieneEstacionamiento": true,
+    "reservas": [
+      {
+        "id": 7,
+        "cliente": "Test Client",
+        "fechaEntrada": "2024-08-01",
+        "fechaSalida": "2024-08-10",
+        "numeroPersonas": 3,
+        "esCancelable": true,
+        "hotelId": 103
+      },
+      {
+        "id": 8,
+        "cliente": "Test Client",
+        "fechaEntrada": "2024-08-01",
+        "fechaSalida": "2024-08-10",
+        "numeroPersonas": 3,
+        "esCancelable": true,
+        "hotelId": 103
+      },
+      {
+        "id": 1,
+        "cliente": "Updated Client",
+        "fechaEntrada": "2024-05-12",
+        "fechaSalida": "2024-05-20",
+        "numeroPersonas": 5,
+        "esCancelable": true,
+        "hotelId": 103
+      }
+    ]
+  },
+  {
+    "id": 108,
+    "nombre": "Las 1001 noches",
+    "direccion": "Por ahi",
+    "calificacion": 5.0,
+    "tieneEstacionamiento": true,
+    "reservas": []
+  }
+]
