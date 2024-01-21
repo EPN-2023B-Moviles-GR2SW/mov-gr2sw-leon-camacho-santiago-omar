@@ -18,4 +18,12 @@ data class Hotel(
                 "\ntieneEstacionamiento: ${tieneEstacionamiento}, " +
                 "\nreservas: ${reservas}"
     }
+
+    fun toStringNoReservas(): String {
+        return "\n\nid: ${id}, " +
+                "\nnombre: ${nombre}, " +
+                "\ndireccion: ${direccion}, " +
+                "\ncalificacion: ${calificacion}, " +
+                "\ntieneEstacionamiento: ${tieneEstacionamiento}"
+    }
 }
