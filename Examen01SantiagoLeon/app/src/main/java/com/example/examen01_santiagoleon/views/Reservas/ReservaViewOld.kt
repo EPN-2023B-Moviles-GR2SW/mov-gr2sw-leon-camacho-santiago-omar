@@ -1,5 +1,5 @@
-package view
-
+package com.example.examen01_santiagoleon.views.Reservas
+/*
 import controllers.ReservaControllerOld
 
 class ReservaViewOld(private val reservaControllerOld: ReservaControllerOld) {
@@ -125,3 +125,4 @@ class ReservaViewOld(private val reservaControllerOld: ReservaControllerOld) {
         }
     }
 }
+*/

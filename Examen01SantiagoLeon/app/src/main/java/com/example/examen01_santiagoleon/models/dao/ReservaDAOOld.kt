@@ -1,5 +1,5 @@
-package models.dao
-
+package com.example.examen01_santiagoleon.models.dao
+/*
 import com.example.examen01_santiagoleon.models.entities.Reserva
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
@@ -68,4 +68,4 @@ class ReservaDAOOld {
 
         return allReservas.filter { it.hotelId == hotelId }
     }
-}
+}*/

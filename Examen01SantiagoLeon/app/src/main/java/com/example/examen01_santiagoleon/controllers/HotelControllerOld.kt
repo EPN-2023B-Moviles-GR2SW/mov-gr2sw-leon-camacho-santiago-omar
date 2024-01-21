@@ -1,6 +1,6 @@
-package controllers
-
-import models.dao.HotelDAOOld
+package com.example.examen01_santiagoleon.controllers
+/*
+import com.example.examen01_santiagoleon.models.dao.HotelDAOOld
 import com.example.examen01_santiagoleon.models.entities.Hotel
 import com.example.examen01_santiagoleon.models.entities.Reserva
 
@@ -89,3 +89,4 @@ class HotelControllerOld(private val hotelDAOOld: HotelDAOOld) {
         }
     }
 }
+*/

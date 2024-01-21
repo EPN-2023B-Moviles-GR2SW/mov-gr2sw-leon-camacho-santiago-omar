@@ -1,5 +1,5 @@
-package view
-
+package com.example.examen01_santiagoleon.views.Hoteles
+/*
 import controllers.HotelControllerOld
 
 class HotelViewOld(private val hotelControllerOld: HotelControllerOld) {
@@ -117,3 +117,4 @@ class HotelViewOld(private val hotelControllerOld: HotelControllerOld) {
         }
     }
 }
+*/

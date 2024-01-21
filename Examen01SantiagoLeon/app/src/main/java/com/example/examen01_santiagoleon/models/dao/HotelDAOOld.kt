@@ -1,9 +1,10 @@
-package models.dao
-
+package com.example.examen01_santiagoleon.models.dao
+/*
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import com.example.examen01_santiagoleon.models.entities.Hotel
 import com.example.examen01_santiagoleon.models.entities.Reserva
+import com.example.examen01_santiagoleon.models.dao.ReservaDAOOld
 import utils.DateDeserializer
 import utils.DateSerializer
 import java.io.FileReader
@@ -61,3 +62,4 @@ class HotelDAOOld(private val reservaDAOOld: ReservaDAOOld) {
         return reservaDAOOld.getReservationsByHotelId(hotelId).toMutableList()
     }
 }
+*/

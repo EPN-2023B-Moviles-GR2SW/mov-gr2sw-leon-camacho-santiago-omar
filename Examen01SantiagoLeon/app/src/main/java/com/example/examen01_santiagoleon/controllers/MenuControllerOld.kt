@@ -1,7 +1,7 @@
-package controllers
-
-import view.HotelViewOld
-import view.ReservaViewOld
+package com.example.examen01_santiagoleon.controllers
+/*
+import com.example.examen01_santiagoleon.views.HotelViewOld
+import com.example.examen01_santiagoleon.views.ReservaViewOld
 
 class MenuControllerOld(
     private val hotelViewOld: HotelViewOld,
@@ -25,3 +25,5 @@ class MenuControllerOld(
         }
     }
 }
+
+ */

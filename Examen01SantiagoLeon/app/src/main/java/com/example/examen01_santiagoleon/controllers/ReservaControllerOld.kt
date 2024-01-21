@@ -1,6 +1,6 @@
-package controllers
-
-import models.dao.ReservaDAOOld
+package com.example.examen01_santiagoleon.controllers
+/*
+import com.example.examen01_santiagoleon.models.dao.ReservaDAOOld
 import com.example.examen01_santiagoleon.models.entities.Reserva
 import java.text.SimpleDateFormat
 import java.text.ParseException
@@ -118,3 +118,5 @@ class ReservaControllerOld(private val reservaDAOOld: ReservaDAOOld, private val
         }
     }
 }
+
+ */
