@@ -1,12 +1,12 @@
-package com.example.examen01_santiagoleon.views
+package com.example.examen01_santiagoleon.controllers
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import com.example.examen01_santiagoleon.R
-import com.example.examen01_santiagoleon.views.Hoteles.HotelesActivity
-import com.example.examen01_santiagoleon.views.Reservas.ReservasActivity
+import com.example.examen01_santiagoleon.controllers.Hoteles.HotelesActivity
+import com.example.examen01_santiagoleon.controllers.Reservas.ReservasActivity
 
 class MenuActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -1,4 +1,4 @@
-package com.example.examen01_santiagoleon.views.Hoteles
+package com.example.examen01_santiagoleon.controllers.Hoteles
 /*
 import controllers.HotelControllerOld
 

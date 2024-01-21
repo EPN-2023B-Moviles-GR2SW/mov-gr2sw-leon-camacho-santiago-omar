@@ -5,7 +5,7 @@
     android:id="@+id/constl_reservas_principal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.Reservas.ReservasActivity">
+    tools:context=".controllers.Reservas.ReservasActivity">
 
     <TextView
         android:id="@+id/textView4"
@@ -125,7 +125,7 @@
         android:id="@+id/input_fecha_entrada"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:focusable="false"
+        android:focusable="true"
         android:hint="Fecha de Entrada (YYYY-MM-DD)"
         app:layout_constraintEnd_toEndOf="@+id/input_cliente"
         app:layout_constraintStart_toStartOf="@+id/input_cliente"
@@ -135,7 +135,7 @@
         android:id="@+id/input_fecha_salida"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:focusable="false"
+        android:focusable="true"
         android:hint="Fecha de Salida (YYYY-MM-DD)"
         app:layout_constraintEnd_toEndOf="@+id/input_fecha_entrada"
         app:layout_constraintStart_toStartOf="@+id/input_fecha_entrada"

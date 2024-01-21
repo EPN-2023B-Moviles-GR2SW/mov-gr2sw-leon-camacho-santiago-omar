@@ -1,11 +1,10 @@
-package com.example.examen01_santiagoleon.views.Hoteles
+package com.example.examen01_santiagoleon.controllers.Hoteles
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import com.example.examen01_santiagoleon.R
-import com.example.examen01_santiagoleon.views.Reservas.VerTodasReservasActivity
 
 class HotelesActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

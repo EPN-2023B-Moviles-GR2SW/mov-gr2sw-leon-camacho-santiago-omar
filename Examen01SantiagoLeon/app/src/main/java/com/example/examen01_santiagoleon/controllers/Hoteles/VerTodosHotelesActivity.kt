@@ -1,4 +1,4 @@
-package com.example.examen01_santiagoleon.views.Hoteles
+package com.example.examen01_santiagoleon.controllers.Hoteles
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

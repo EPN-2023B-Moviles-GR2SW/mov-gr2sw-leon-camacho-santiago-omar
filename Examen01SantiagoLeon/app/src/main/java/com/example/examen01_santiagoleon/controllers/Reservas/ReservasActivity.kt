@@ -1,4 +1,4 @@
-package com.example.examen01_santiagoleon.views.Reservas
+package com.example.examen01_santiagoleon.controllers.Reservas
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -9,7 +9,6 @@ import android.widget.Switch
 import com.example.examen01_santiagoleon.R
 import com.example.examen01_santiagoleon.models.dao.ReservaDAO
 import com.example.examen01_santiagoleon.models.entities.Reserva
-import com.example.examen01_santiagoleon.views.Hoteles.HotelesActivity
 import com.google.android.material.snackbar.Snackbar
 import java.text.SimpleDateFormat
 

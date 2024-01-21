@@ -13,22 +13,22 @@
         android:theme="@style/Theme.AppCompat.Light"
         tools:targetApi="31" >
         <activity
-            android:name=".views.Hoteles.VerTodosHotelesActivity"
+            android:name=".controllers.Hoteles.VerTodosHotelesActivity"
             android:exported="false" />
         <activity
-            android:name=".views.Reservas.ReservasPorHotelActivity"
+            android:name=".controllers.Reservas.ReservasPorHotelActivity"
             android:exported="false" />
         <activity
-            android:name=".views.Reservas.VerTodasReservasActivity"
+            android:name=".controllers.Reservas.VerTodasReservasActivity"
             android:exported="false" />
         <activity
-            android:name=".views.Reservas.ReservasActivity"
+            android:name=".controllers.Reservas.ReservasActivity"
             android:exported="false" />
         <activity
-            android:name=".views.Hoteles.HotelesActivity"
+            android:name=".controllers.Hoteles.HotelesActivity"
             android:exported="false" />
         <activity
-            android:name=".views.MenuActivity"
+            android:name=".controllers.MenuActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
