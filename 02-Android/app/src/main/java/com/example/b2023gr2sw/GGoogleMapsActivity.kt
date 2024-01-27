@@ -3,10 +3,19 @@ package com.example.b2023gr2sw
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.widget.Button
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
+import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.PolygonOptions
+import com.google.android.gms.maps.model.PolylineOptions
+import com.google.android.material.snackbar.Snackbar
 
 class GGoogleMapsActivity : AppCompatActivity() {
 
@@ -17,6 +26,28 @@ class GGoogleMapsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_ggoogle_maps)
         solicitarPermisos()
         iniciarLogicaMapa()
+        val botonCarolina = findViewById<Button>(R.id.btn_ir_carolina)
+        botonCarolina
+            .setOnClickListener{
+                irCarolina()
+            }
+    }
+
+    fun irCarolina() {
+        val carolina = LatLng(-0.1825684318486696,
+            -78.48447277600916)
+        val zoom = 17f
+        moverCamaraConZoom(carolina, zoom)
+    }
+
+    fun mostrarSnackbar(texto:String) {
+        val snack = Snackbar
+            .make(
+                findViewById(R.id.cl_google_maps), //view
+                texto, //texto
+                Snackbar.LENGTH_LONG //tiempo
+            )
+            .show()
     }
 
     fun solicitarPermisos() {
@@ -51,8 +82,110 @@ class GGoogleMapsActivity : AppCompatActivity() {
             with(googleMap) {
                 mapa = googleMap
                 establecerConfiguracionMapa()
+                moverQuicentro()
+                anadirPolilinea()
+                anadirPoligono()
+                escucharListeners()
             }
         }
+    }
+
+    fun escucharListeners() {
+        mapa.setOnPolygonClickListener{
+            mostrarSnackbar("setOnPolygonClickListener ${it}")
+            it.tag //ID
+        }
+
+        mapa.setOnPolylineClickListener{
+            mostrarSnackbar("setOnPolylineClickListener ${it}")
+            it.tag //ID
+        }
+
+        mapa.setOnMarkerClickListener{
+            mostrarSnackbar("setOnMarkerClickListener ${it}")
+            it.tag //ID
+            return@setOnMarkerClickListener true
+        }
+
+        mapa.setOnCameraMoveListener {
+            Log.i("mapa", "setOnCameraMoveListener")
+        }
+
+        mapa.setOnCameraMoveStartedListener {
+            Log.i("mapa", "setOnCameraMoveStartedListener ${it}")
+        }
+
+        mapa.setOnCameraIdleListener {
+            Log.i("mapa", "setOnCameraIdleListener")
+        }
+    }
+
+    private fun anadirPolilinea() {
+        with(mapa) {
+            val poliLineaUno = mapa
+                .addPolyline(
+                    PolylineOptions()
+                        .clickable(true)
+                        .add(
+                            LatLng(-0.1771546902239471,
+                                -78.48344981495214),
+                            LatLng(-0.17968981486125768,
+                                -78.48269198043828),
+                            LatLng(-0.17710958124147777,
+                                -78.48142892291516)
+                        )
+                )
+            poliLineaUno.tag = "linea-1" // <- ID
+        }
+    }
+
+    private fun anadirPoligono() {
+        with(mapa) {
+            //POLIGONO
+            val poligonoUno = mapa
+                .addPolygon(
+                    PolygonOptions()
+                        .clickable(true)
+                        .add(
+                            LatLng(-0.1771546902239471,
+                                -78.48344981495214),
+                            LatLng(-0.17968981486125768,
+                                -78.48269198043828),
+                            LatLng(-0.17710958124147777,
+                                -78.48142892291516)
+                        )
+                )
+            poligonoUno.fillColor = -0xc771c4
+            poligonoUno.tag = "poligono-2" // <- ID
+        }
+    }
+
+    private fun moverQuicentro() {
+        val zoom = 17f
+        val quicentro = LatLng(
+            -0.17556708490271092,
+            -78.48014901143776
+        )
+
+        val titulo = "Quicentro"
+        val markQuicentro = anadirMarcador(quicentro, titulo)
+        markQuicentro.tag = titulo
+        moverCamaraConZoom(quicentro, zoom)
+    }
+
+    fun anadirMarcador(latLng: LatLng, title: String): Marker {
+        return mapa.addMarker(
+            MarkerOptions()
+                .position(latLng)
+                .title(title)
+        )!!
+    }
+
+    fun moverCamaraConZoom(latLng: LatLng, zoom: Float = 10f) {
+        mapa.moveCamera(
+            CameraUpdateFactory
+                .newLatLngZoom(latLng, zoom)
+        )
     }
 
     fun establecerConfiguracionMapa() {
