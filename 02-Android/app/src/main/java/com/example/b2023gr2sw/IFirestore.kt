@@ -52,18 +52,19 @@ class IFirestore : AppCompatActivity() {
         val botonCrear = findViewById<Button>(R.id.btn_fs_crear)
         botonCrear.setOnClickListener { crearEjemplo() }
 
-
         // Boton Eliminar
         val botonFirebaseEliminar = findViewById<Button>(
             R.id.btn_fs_eliminar)
         botonFirebaseEliminar.setOnClickListener {
             eliminarRegistro() }
+
         // Empezar a paginar
         val botonFirebaseEmpezarPaginar = findViewById<Button>(
             R.id.btn_fs_epaginar)
         botonFirebaseEmpezarPaginar.setOnClickListener {
             query = null; consultarCiudades(adaptador);
         }
+
         // Paginar
         val botonFirebasePaginar = findViewById<Button>(
             R.id.btn_fs_paginar)
@@ -150,6 +151,7 @@ class IFirestore : AppCompatActivity() {
             .addOnCompleteListener { /* Si todo salio bien*/ }
             .addOnFailureListener { /* Si algo salio mal*/ }
     }
+    
     fun guardarQuery(
         documentSnapshots: QuerySnapshot,
         refCities: Query
@@ -179,7 +181,6 @@ class IFirestore : AppCompatActivity() {
             "materias" to listOf("web", "moviles")
         )
 
-
         // identificador quemado (crear/actualizar)
         referenciaEjemploEstudiante
             .document("12345678")
@@ -207,17 +208,6 @@ class IFirestore : AppCompatActivity() {
         val citiesRefUnico = db.collection("cities")
         limpiarArreglo()
         adaptador.notifyDataSetChanged()
-        // Coleccion "ciudad"
-        //     -> Coleccion "barrio"
-        //            -> Coleccion "direccion"
-        // "Quito" => "La_Floresta" => "E90-001"
-        // db.collection("ciudad").document("Quito")
-        //   .collection("barrio").document("La Floresta").collection("direccion")
-        //   .document("E90-001")
-        // .collection("nombre_coleccion_hijo").document("id_hijo")
-        // .collection("nombre_coleccion_nieto").document("id_nieto")
-
-
         citiesRefUnico
             .document("BJ")
             .get() // obtener 1 DOCUMENTO
