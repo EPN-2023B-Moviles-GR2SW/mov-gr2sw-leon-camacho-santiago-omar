@@ -151,7 +151,7 @@ class IFirestore : AppCompatActivity() {
             .addOnCompleteListener { /* Si todo salio bien*/ }
             .addOnFailureListener { /* Si algo salio mal*/ }
     }
-    
+
     fun guardarQuery(
         documentSnapshots: QuerySnapshot,
         refCities: Query
