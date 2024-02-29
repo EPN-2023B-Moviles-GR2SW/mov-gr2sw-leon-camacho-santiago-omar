@@ -6,30 +6,4 @@
     android:layout_height="match_parent"
     tools:context=".controllers.Reservas.VerTodasReservasActivity">
 
-    <ListView
-        android:id="@+id/lv_todas_reservas"
-        android:layout_width="345dp"
-        android:layout_height="571dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/btn_reservas_regresar_listar_gestionar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Regresar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Reservas"
-        app:layout_constraintBottom_toTopOf="@+id/lv_todas_reservas"
-        app:layout_constraintEnd_toEndOf="@+id/lv_todas_reservas"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="@+id/lv_todas_reservas" />
 </androidx.constraintlayout.widget.ConstraintLayout>

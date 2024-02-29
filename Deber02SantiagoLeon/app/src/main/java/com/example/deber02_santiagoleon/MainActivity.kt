@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.widget.Button
 import com.example.deber02_santiagoleon.controllers.MenuActivity
 
+//import com.example.deber02_santiagoleon.controllers.MenuActivity
+
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
