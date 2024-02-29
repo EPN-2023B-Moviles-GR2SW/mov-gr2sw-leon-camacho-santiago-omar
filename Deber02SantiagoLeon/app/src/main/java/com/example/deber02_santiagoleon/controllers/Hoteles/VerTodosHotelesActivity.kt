@@ -13,7 +13,7 @@ class VerTodosHotelesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ver_todos_hoteles)
 
-        val hotelDAO = HotelDAO()
+        val hotelDAO = HotelDAO(this)
         val todosHoteles = hotelDAO.getAllHotels()
 
         val listView = findViewById<ListView>(R.id.lv_todos_hoteles)

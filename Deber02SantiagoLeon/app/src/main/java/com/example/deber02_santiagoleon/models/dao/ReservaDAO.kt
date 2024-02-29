@@ -1,61 +1,130 @@
 package com.example.deber02_santiagoleon.models.dao
 
+import android.content.ContentValues
+import android.content.Context
 import com.example.deber02_santiagoleon.data.Database
+import com.example.deber02_santiagoleon.data.DatabaseHelper
 import com.example.deber02_santiagoleon.models.entities.Reserva
+import java.text.SimpleDateFormat
 
-class ReservaDAO {
+class ReservaDAO(context: Context?) {
+    private val dbHelper = DatabaseHelper(context)
+    private val dateFormat = SimpleDateFormat("yyyy-MM-dd")
 
     fun getAllReservas(): List<Reserva> {
-        return Database.listaReservas101 + Database.listaReservas102 + Database.listaReservas103
+        val db = dbHelper.readableDatabase
+        val cursor = db.rawQuery("SELECT * FROM Reserva", null)
+        val reservas = mutableListOf<Reserva>()
+
+        if (cursor.moveToFirst()) {
+            do {
+                val reserva = Reserva(
+                    id = cursor.getInt(cursor.getColumnIndexOrThrow("id")),
+                    cliente = cursor.getString(cursor.getColumnIndexOrThrow("cliente")),
+                    fechaEntrada = dateFormat.parse(cursor.getString(cursor.getColumnIndexOrThrow("fechaEntrada"))),
+                    fechaSalida = dateFormat.parse(cursor.getString(cursor.getColumnIndexOrThrow("fechaSalida"))),
+                    numeroPersonas = cursor.getInt(cursor.getColumnIndexOrThrow("numeroPersonas")),
+                    esCancelable = cursor.getInt(cursor.getColumnIndexOrThrow("esCancelable")) > 0,
+                    hotelId = cursor.getInt(cursor.getColumnIndexOrThrow("hotelId"))
+                )
+                reservas.add(reserva)
+            } while (cursor.moveToNext())
+        }
+        cursor.close()
+        return reservas
     }
 
     fun saveReserva(reserva: Reserva) {
-        when (reserva.hotelId) {
-            101 -> Database.listaReservas101.add(reserva)
-            102 -> Database.listaReservas102.add(reserva)
-            103 -> Database.listaReservas103.add(reserva)
+        val db = dbHelper.writableDatabase
+        val values = ContentValues().apply {
+            put("cliente", reserva.cliente)
+            put("fechaEntrada", dateFormat.format(reserva.fechaEntrada))
+            put("fechaSalida", dateFormat.format(reserva.fechaSalida))
+            put("numeroPersonas", reserva.numeroPersonas)
+            put("esCancelable", if (reserva.esCancelable) 1 else 0)
+            put("hotelId", reserva.hotelId)
         }
+
+        db.insert("Reserva", null, values)
     }
 
     fun updateReserva(updatedReserva: Reserva) {
-        when (updatedReserva.hotelId) {
-            101 -> updateReservaInList(Database.listaReservas101, updatedReserva)
-            102 -> updateReservaInList(Database.listaReservas102, updatedReserva)
-            103 -> updateReservaInList(Database.listaReservas103, updatedReserva)
+        val db = dbHelper.writableDatabase
+        val values = ContentValues().apply {
+            put("cliente", updatedReserva.cliente)
+            put("fechaEntrada", dateFormat.format(updatedReserva.fechaEntrada))
+            put("fechaSalida", dateFormat.format(updatedReserva.fechaSalida))
+            put("numeroPersonas", updatedReserva.numeroPersonas)
+            put("esCancelable", if (updatedReserva.esCancelable) 1 else 0)
+            // Note: hotelId is not updated because a reservation's hotel shouldn't change
         }
-    }
 
-    private fun updateReservaInList(reservasList: MutableList<Reserva>, updatedReserva: Reserva) {
-        val index = reservasList.indexOfFirst { it.id == updatedReserva.id }
-        if (index != -1) {
-            reservasList[index] = updatedReserva
-        }
+        db.update("Reserva", values, "id = ?", arrayOf(updatedReserva.id.toString()))
     }
 
     fun deleteReserva(reservaId: Int) {
-        when {
-            reservaId in Database.listaReservas101.map { it.id } -> deleteReservaFromList(Database.listaReservas101, reservaId)
-            reservaId in Database.listaReservas102.map { it.id } -> deleteReservaFromList(Database.listaReservas102, reservaId)
-            reservaId in Database.listaReservas103.map { it.id } -> deleteReservaFromList(Database.listaReservas103, reservaId)
-            // Add cases for other hotel IDs if necessary
-        }
-    }
-
-    private fun deleteReservaFromList(reservasList: MutableList<Reserva>, reservaId: Int) {
-        reservasList.removeAll { it.id == reservaId }
+        val db = dbHelper.writableDatabase
+        db.delete("Reserva", "id = ?", arrayOf(reservaId.toString()))
     }
 
     fun findReservaById(reservaId: Int): Reserva? {
-        val allReservas = getAllReservas()
-        return allReservas.find { it.id == reservaId }
+        val db = dbHelper.readableDatabase
+        val cursor = db.query(
+            "Reserva",
+            null, // all columns
+            "id = ?", // selection criteria
+            arrayOf(reservaId.toString()), // selection args
+            null, // groupBy
+            null, // having
+            null // orderBy
+        )
+
+        var reserva: Reserva? = null
+        if (cursor.moveToFirst()) {
+            reserva = Reserva(
+                id = cursor.getInt(cursor.getColumnIndexOrThrow("id")),
+                cliente = cursor.getString(cursor.getColumnIndexOrThrow("cliente")),
+                fechaEntrada = dateFormat.parse(cursor.getString(cursor.getColumnIndexOrThrow("fechaEntrada"))) ?: throw Exception("Invalid date format"),
+                fechaSalida = dateFormat.parse(cursor.getString(cursor.getColumnIndexOrThrow("fechaSalida"))) ?: throw Exception("Invalid date format"),
+                numeroPersonas = cursor.getInt(cursor.getColumnIndexOrThrow("numeroPersonas")),
+                esCancelable = cursor.getInt(cursor.getColumnIndexOrThrow("esCancelable")) > 0,
+                hotelId = cursor.getInt(cursor.getColumnIndexOrThrow("hotelId"))
+            )
+        }
+        cursor.close()
+
+        return reserva
     }
 
-    fun getReservationsByHotelId(hotelId: Int): List<Reserva> {
-        return when (hotelId) {
-            101 -> Database.listaReservas101
-            102 -> Database.listaReservas102
-            103 -> Database.listaReservas103
-            else -> emptyList()
+    fun getReservationsByHotelId(hotelId: Int): MutableList<Reserva> {
+        val db = dbHelper.readableDatabase
+        val reservas = mutableListOf<Reserva>()
+        val cursor = db.query(
+            "Reserva",
+            null, // all columns
+            "hotelId = ?", // selection
+            arrayOf(hotelId.toString()), // selectionArgs
+            null, // groupBy
+            null, // having
+            null  // orderBy
+        )
+
+        if (cursor.moveToFirst()) {
+            do {
+                val reserva = Reserva(
+                    id = cursor.getInt(cursor.getColumnIndexOrThrow("id")),
+                    cliente = cursor.getString(cursor.getColumnIndexOrThrow("cliente")),
+                    fechaEntrada = dateFormat.parse(cursor.getString(cursor.getColumnIndexOrThrow("fechaEntrada"))) ?: throw Exception("Invalid date format"),
+                    fechaSalida = dateFormat.parse(cursor.getString(cursor.getColumnIndexOrThrow("fechaSalida"))) ?: throw Exception("Invalid date format"),
+                    numeroPersonas = cursor.getInt(cursor.getColumnIndexOrThrow("numeroPersonas")),
+                    esCancelable = cursor.getInt(cursor.getColumnIndexOrThrow("esCancelable")) > 0,
+                    hotelId = cursor.getInt(cursor.getColumnIndexOrThrow("hotelId"))
+                )
+                reservas.add(reserva)
+            } while (cursor.moveToNext())
         }
+        cursor.close()
+
+        return reservas
     }
 }

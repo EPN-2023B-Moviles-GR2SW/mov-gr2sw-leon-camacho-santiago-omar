@@ -17,7 +17,7 @@ class ReservasActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_reservas)
 
-        val reservaDAO = ReservaDAO()
+        val reservaDAO = ReservaDAO(this)
         val dateFormat = SimpleDateFormat("yyyy-MM-dd")
 
         val inputId = findViewById<EditText>(R.id.input_id_reservas)

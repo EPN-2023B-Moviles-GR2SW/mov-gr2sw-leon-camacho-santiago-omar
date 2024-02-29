@@ -13,7 +13,7 @@ class VerTodasReservasActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ver_todas_reservas)
 
-        val reservaDAO = ReservaDAO()
+        val reservaDAO = ReservaDAO(this)
         val todasReservas = reservaDAO.getAllReservas()
 
         val listView = findViewById<ListView>(R.id.lv_todas_reservas)

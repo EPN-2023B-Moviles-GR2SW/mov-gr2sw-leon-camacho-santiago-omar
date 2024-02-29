@@ -18,7 +18,7 @@ class HotelesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_hoteles)
 
-        val hotelDAO = HotelDAO()
+        val hotelDAO = HotelDAO(this)
         val listView = findViewById<ListView>(R.id.lv_lista_reservas_de_hotel)
 
         val inputId = findViewById<EditText>(R.id.input_id)
