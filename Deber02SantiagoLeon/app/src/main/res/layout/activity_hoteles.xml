@@ -2,8 +2,163 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constl_hoteles_principal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".controllers.Hoteles.HotelesActivity">
 
+    <Button
+        android:id="@+id/btn_regresar_hoteles_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Regresar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Menu de Hoteles"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.046" />
+
+    <Button
+        android:id="@+id/btn_ver_todos_hoteles"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ver todos los hoteles"
+        app:layout_constraintEnd_toEndOf="@+id/textView3"
+        app:layout_constraintStart_toStartOf="@+id/textView3"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <EditText
+        android:id="@+id/input_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:hint="ID"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="@+id/btn_ver_todos_hoteles"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="@+id/btn_ver_todos_hoteles"
+        app:layout_constraintTop_toBottomOf="@+id/btn_ver_todos_hoteles" />
+
+    <EditText
+        android:id="@+id/input_nombre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nombre hotel"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="@+id/input_id"
+        app:layout_constraintStart_toStartOf="@+id/input_id"
+        app:layout_constraintTop_toBottomOf="@+id/input_id" />
+
+    <EditText
+        android:id="@+id/input_direccion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Direccion"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="@+id/input_nombre"
+        app:layout_constraintStart_toStartOf="@+id/input_nombre"
+        app:layout_constraintTop_toBottomOf="@+id/input_nombre" />
+
+    <EditText
+        android:id="@+id/input_calificacion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Calificacion"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="@+id/input_direccion"
+        app:layout_constraintStart_toStartOf="@+id/input_direccion"
+        app:layout_constraintTop_toBottomOf="@+id/input_direccion" />
+
+    <Switch
+        android:id="@+id/input_tiene_estacionamiento"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tiene estacionamiento (true/false)"
+        app:layout_constraintEnd_toEndOf="@+id/input_calificacion"
+        app:layout_constraintStart_toStartOf="@+id/input_calificacion"
+        app:layout_constraintTop_toBottomOf="@+id/input_calificacion" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:text="Reservas del Hotel"
+        app:layout_constraintBottom_toTopOf="@+id/lv_lista_reservas_de_hotel"
+        app:layout_constraintEnd_toEndOf="@+id/lv_lista_reservas_de_hotel"
+        app:layout_constraintHorizontal_bias="0.484"
+        app:layout_constraintStart_toStartOf="@+id/lv_lista_reservas_de_hotel" />
+
+    <ListView
+        android:id="@+id/lv_lista_reservas_de_hotel"
+        android:layout_width="372dp"
+        android:layout_height="192dp"
+        android:layout_marginTop="28dp"
+        app:layout_constraintEnd_toEndOf="@+id/input_tiene_estacionamiento"
+        app:layout_constraintHorizontal_bias="0.472"
+        app:layout_constraintStart_toStartOf="@+id/input_tiene_estacionamiento"
+        app:layout_constraintTop_toBottomOf="@+id/input_tiene_estacionamiento" />
+
+    <Button
+        android:id="@+id/btn_hoteles_crear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="28dp"
+        android:text="Crear"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_hoteles_actualizar"
+        app:layout_constraintEnd_toStartOf="@+id/btn_hoteles_actualizar"
+        app:layout_constraintTop_toTopOf="@+id/btn_hoteles_actualizar"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/btn_hoteles_actualizar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Actualizar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.799" />
+
+    <Button
+        android:id="@+id/btn_hoteles_eliminar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:text="Eliminar"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_hoteles_actualizar"
+        app:layout_constraintStart_toEndOf="@+id/btn_hoteles_actualizar"
+        app:layout_constraintTop_toTopOf="@+id/btn_hoteles_actualizar"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/btn_hoteles_buscar_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Buscar por ID"
+        app:layout_constraintEnd_toEndOf="@+id/btn_hoteles_actualizar"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/btn_hoteles_actualizar"
+        app:layout_constraintTop_toBottomOf="@+id/btn_hoteles_actualizar" />
+
+    <Button
+        android:id="@+id/btn_ver_reservas_por_hotel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ver reservas de un hotel"
+        app:layout_constraintEnd_toEndOf="@+id/btn_hoteles_buscar_id"
+        app:layout_constraintStart_toStartOf="@+id/btn_hoteles_buscar_id"
+        app:layout_constraintTop_toBottomOf="@+id/btn_hoteles_buscar_id" />
 </androidx.constraintlayout.widget.ConstraintLayout>
