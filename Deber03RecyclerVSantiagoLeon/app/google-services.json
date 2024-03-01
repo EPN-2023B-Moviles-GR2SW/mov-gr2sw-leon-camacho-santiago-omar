@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "735222936024",
+    "project_id": "deber03recyclerv-santiagoleon",
+    "storage_bucket": "deber03recyclerv-santiagoleon.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:735222936024:android:fee8d1febc3b9062bb02ad",
+        "android_client_info": {
+          "package_name": "com.example.deber03recyclerv_santiagoleon"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnTBeHc3s9AjTedFc3dOxQkYIu6m_kstg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
