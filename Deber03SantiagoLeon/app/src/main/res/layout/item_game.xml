@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        android:id="@+id/ivGame"
+        android:layout_width="220dp"
+        android:layout_height="180dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="28dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:background="@color/black" />
+
+    <TextView
+        android:id="@+id/tvGameTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="6dp"
+        app:layout_constraintStart_toStartOf="@+id/ivGame"
+        app:layout_constraintTop_toBottomOf="@+id/ivGame"
+        tools:text="Title" />
+
+    <TextView
+        android:id="@+id/tvGamePrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@+id/tvGameTitle"
+        app:layout_constraintTop_toBottomOf="@+id/tvGameTitle"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="6dp"
+        tools:text="Price" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

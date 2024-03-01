@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1009302596467",
+    "project_id": "deber03santiagoleon",
+    "storage_bucket": "deber03santiagoleon.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1009302596467:android:6d4d337a0325296a5fb306",
+        "android_client_info": {
+          "package_name": "com.example.deber03santiagoleon"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCijBVGNXW3jhcwXkQiYMiNJcA_K1J6LzE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
