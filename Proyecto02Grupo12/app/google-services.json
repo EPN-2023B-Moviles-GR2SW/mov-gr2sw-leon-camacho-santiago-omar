@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "609592615021",
-    "project_id": "proyecto02-grupo12",
-    "storage_bucket": "proyecto02-grupo12.appspot.com"
+    "project_number": "1029696404576",
+    "project_id": "proyecto02grupo12",
+    "storage_bucket": "proyecto02grupo12.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:609592615021:android:b40449b6075632a558df64",
+        "mobilesdk_app_id": "1:1029696404576:android:ff8d58b68ef903e49c5705",
         "android_client_info": {
-          "package_name": "com.example.proyecto02_grupo12"
+          "package_name": "com.apiguave.tinderclonecompose"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCusdScDQkss9A8l7F5GXc64Q_nzjloXwg"
+          "current_key": "AIzaSyDLShsj5bqZLhPqhS9VTOQPtC8ahLwoxlk"
         }
       ],
       "services": {
