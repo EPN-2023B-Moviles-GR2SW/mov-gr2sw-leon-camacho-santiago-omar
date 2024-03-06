@@ -10,7 +10,9 @@ import com.example.deber02_santiagoleon.R
 import com.example.deber02_santiagoleon.models.dao.ReservaDAO
 import com.example.deber02_santiagoleon.models.entities.Reserva
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.Timestamp
 import java.text.SimpleDateFormat
+import java.util.Locale
 
 class ReservasActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,7 +20,7 @@ class ReservasActivity : AppCompatActivity() {
         setContentView(R.layout.activity_reservas)
 
         val reservaDAO = ReservaDAO(this)
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd")
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
 
         val inputId = findViewById<EditText>(R.id.input_id_reservas)
         val inputCliente = findViewById<EditText>(R.id.input_cliente)
@@ -31,17 +33,21 @@ class ReservasActivity : AppCompatActivity() {
         val btnCrear = findViewById<Button>(R.id.btn_reservas_crear)
         btnCrear.setOnClickListener {
             try {
+                val fechaEntrada = Timestamp(dateFormat.parse(inputFechaEntrada.text.toString())!!)
+                val fechaSalida = Timestamp(dateFormat.parse(inputFechaSalida.text.toString())!!)
                 val reserva = Reserva(
-                    id = inputId.text.toString().toInt(),
                     cliente = inputCliente.text.toString(),
-                    fechaEntrada = dateFormat.parse(inputFechaEntrada.text.toString())!!,
-                    fechaSalida = dateFormat.parse(inputFechaSalida.text.toString())!!,
+                    fechaEntrada = fechaEntrada,
+                    fechaSalida = fechaSalida,
                     numeroPersonas = inputNumeroPersonas.text.toString().toInt(),
                     esCancelable = inputEsCancelable.isChecked,
-                    hotelId = inputHotelId.text.toString().toInt()
+                    hotelId = inputHotelId.text.toString() // Assuming hotelId is a String
                 )
-                reservaDAO.saveReserva(reserva)
-                mostrarSnackbar("Reserva creada con éxito")
+                reservaDAO.saveReserva(reserva.hotelId, reserva, {
+                    mostrarSnackbar("Reserva creada con éxito")
+                }) {
+                    mostrarSnackbar("Error al crear reserva: ${it.message}")
+                }
             } catch (e: Exception) {
                 mostrarSnackbar("Error al crear reserva: ${e.message}")
             }
@@ -49,51 +55,59 @@ class ReservasActivity : AppCompatActivity() {
 
         val btnActualizar = findViewById<Button>(R.id.btn_reservas_actualizar)
         btnActualizar.setOnClickListener {
-            try {
-                val reserva = Reserva(
-                    id = inputId.text.toString().toInt(),
-                    cliente = inputCliente.text.toString(),
-                    fechaEntrada = dateFormat.parse(inputFechaEntrada.text.toString())!!,
-                    fechaSalida = dateFormat.parse(inputFechaSalida.text.toString())!!,
-                    numeroPersonas = inputNumeroPersonas.text.toString().toInt(),
-                    esCancelable = inputEsCancelable.isChecked,
-                    hotelId = inputHotelId.text.toString().toInt()
+            val hotelId = inputHotelId.text.toString()
+            val reservaId = inputId.text.toString() // Assuming you have an input field for the reservation ID
+            if (hotelId.isNotEmpty() && reservaId.isNotEmpty()) {
+                val updatedFields = mapOf(
+                    "cliente" to inputCliente.text.toString(),
+                    "fechaEntrada" to Timestamp(dateFormat.parse(inputFechaEntrada.text.toString())!!),
+                    "fechaSalida" to Timestamp(dateFormat.parse(inputFechaSalida.text.toString())!!),
+                    "numeroPersonas" to inputNumeroPersonas.text.toString().toInt(),
+                    "esCancelable" to inputEsCancelable.isChecked
                 )
-                reservaDAO.updateReserva(reserva)
-                mostrarSnackbar("Reserva actualizada con éxito")
-            } catch (e: Exception) {
-                mostrarSnackbar("Error al actualizar reserva: ${e.message}")
+                reservaDAO.updateReserva(hotelId, reservaId, updatedFields, {
+                    mostrarSnackbar("Reserva actualizada con éxito")
+                }) {
+                    mostrarSnackbar("Error al actualizar reserva: ${it.message}")
+                }
+            } else {
+                mostrarSnackbar("Error: ID de hotel o reserva está vacío")
             }
         }
 
         val btnEliminar = findViewById<Button>(R.id.btn_reservas_eliminar)
         btnEliminar.setOnClickListener {
-            try {
-                val reservaId = inputId.text.toString().toInt()
-                reservaDAO.deleteReserva(reservaId)
-                mostrarSnackbar("Reserva eliminada con éxito")
-            } catch (e: Exception) {
-                mostrarSnackbar("Error al eliminar reserva: ${e.message}")
+            val hotelId = inputHotelId.text.toString()
+            val reservaId = inputId.text.toString() // Again, assuming this is the unique reservation ID
+            if (hotelId.isNotEmpty() && reservaId.isNotEmpty()) {
+                reservaDAO.deleteReserva(hotelId, reservaId, {
+                    mostrarSnackbar("Reserva eliminada con éxito")
+                }) {
+                    mostrarSnackbar("Error al eliminar reserva: ${it.message}")
+                }
+            } else {
+                mostrarSnackbar("Error: ID de hotel o reserva está vacío")
             }
         }
 
         val btnBuscarPorID = findViewById<Button>(R.id.btn_reservas_buscar_id)
         btnBuscarPorID.setOnClickListener {
-            try {
-                val reservaId = inputId.text.toString().toInt()
-                val reserva = reservaDAO.findReservaById(reservaId)
-                if (reserva != null) {
-                    inputCliente.setText(reserva.cliente)
-                    inputFechaEntrada.setText(dateFormat.format(reserva.fechaEntrada))
-                    inputFechaSalida.setText(dateFormat.format(reserva.fechaSalida))
-                    inputNumeroPersonas.setText(reserva.numeroPersonas.toString())
-                    inputEsCancelable.isChecked = reserva.esCancelable
-                    inputHotelId.setText(reserva.hotelId.toString())
-                } else {
-                    mostrarSnackbar("Reserva no encontrada")
+            val hotelId = inputHotelId.text.toString()
+            val reservaId = inputId.text.toString()
+            if (hotelId.isNotEmpty() && reservaId.isNotEmpty()) {
+                reservaDAO.findReservaById(hotelId, reservaId, { reserva ->
+                    reserva?.let {
+                        inputCliente.setText(it.cliente)
+                        inputFechaEntrada.setText(dateFormat.format(it.fechaEntrada.toDate()))
+                        inputFechaSalida.setText(dateFormat.format(it.fechaSalida.toDate()))
+                        inputNumeroPersonas.setText(it.numeroPersonas.toString())
+                        inputEsCancelable.isChecked = it.esCancelable
+                    } ?: mostrarSnackbar("Reserva no encontrada")
+                }) {
+                    mostrarSnackbar("Error al buscar reserva: ${it.message}")
                 }
-            } catch (e: Exception) {
-                mostrarSnackbar("Error al buscar reserva: ${e.message}")
+            } else {
+                mostrarSnackbar("Por favor, ingrese un ID de hotel y reserva válido")
             }
         }
 

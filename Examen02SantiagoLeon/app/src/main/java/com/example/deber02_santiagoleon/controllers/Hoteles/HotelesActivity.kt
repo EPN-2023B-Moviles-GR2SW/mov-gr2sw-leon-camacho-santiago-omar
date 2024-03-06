@@ -29,80 +29,83 @@ class HotelesActivity : AppCompatActivity() {
 
         val btnCrear = findViewById<Button>(R.id.btn_hoteles_crear)
         btnCrear.setOnClickListener {
-            try {
-                val newHotel = Hotel(
-                    id = inputId.text.toString().toInt(),
-                    nombre = inputNombre.text.toString(),
-                    direccion = inputDireccion.text.toString(),
-                    calificacion = inputCalificacion.text.toString().toDouble(),
-                    tieneEstacionamiento = inputTieneEstacionamiento.isChecked,
-                    reservas = mutableListOf()
-                )
-                hotelDAO.saveHotel(newHotel)
+            val newHotel = Hotel(
+                nombre = inputNombre.text.toString(),
+                direccion = inputDireccion.text.toString(),
+                calificacion = inputCalificacion.text.toString().toDouble(),
+                tieneEstacionamiento = inputTieneEstacionamiento.isChecked
+            )
+            hotelDAO.saveHotel(newHotel, {
                 mostrarSnackbar("Hotel creado con éxito")
-            } catch (e: Exception) {
-                mostrarSnackbar("Error al crear hotel: ${e.message}")
+            }) {
+                mostrarSnackbar("Error al crear hotel: ${it.message}")
             }
         }
 
         val btnActualizar = findViewById<Button>(R.id.btn_hoteles_actualizar)
         btnActualizar.setOnClickListener {
-            try {
-                val updatedHotel = Hotel(
-                    id = inputId.text.toString().toInt(),
-                    nombre = inputNombre.text.toString(),
-                    direccion = inputDireccion.text.toString(),
-                    calificacion = inputCalificacion.text.toString().toDouble(),
-                    tieneEstacionamiento = inputTieneEstacionamiento.isChecked,
-                    reservas = null  // The reservations list will not be updated here
-                )
-                hotelDAO.updateHotel(updatedHotel)
-                mostrarSnackbar("Hotel actualizado con éxito")
-            } catch (e: Exception) {
-                mostrarSnackbar("Error al actualizar hotel: ${e.message}")
+            inputId.text.toString().let { hotelId ->
+                if (hotelId.isNotEmpty()) {
+                    val updatedFields = mapOf(
+                        "nombre" to inputNombre.text.toString(),
+                        "direccion" to inputDireccion.text.toString(),
+                        "calificacion" to inputCalificacion.text.toString().toDouble(),
+                        "tieneEstacionamiento" to inputTieneEstacionamiento.isChecked
+                    )
+                    hotelDAO.updateHotel(hotelId, updatedFields, {
+                        mostrarSnackbar("Hotel actualizado con éxito")
+                    }) {
+                        mostrarSnackbar("Error al actualizar hotel: ${it.message}")
+                    }
+                } else {
+                    mostrarSnackbar("Ingrese un ID válido para actualizar")
+                }
             }
         }
 
         val btnEliminar = findViewById<Button>(R.id.btn_hoteles_eliminar)
         btnEliminar.setOnClickListener {
-            try {
-                val hotelId = inputId.text.toString().toInt()
-                hotelDAO.deleteHotel(hotelId)
-                mostrarSnackbar("Hotel eliminado con éxito")
-            } catch (e: Exception) {
-                mostrarSnackbar("Error al eliminar hotel: ${e.message}")
+            inputId.text.toString().let { hotelId ->
+                if (hotelId.isNotEmpty()) {
+                    hotelDAO.deleteHotel(hotelId, {
+                        mostrarSnackbar("Hotel eliminado con éxito")
+                    }) {
+                        mostrarSnackbar("Error al eliminar hotel: ${it.message}")
+                    }
+                } else {
+                    mostrarSnackbar("Ingrese un ID válido para eliminar")
+                }
             }
         }
 
         val btnBuscarPorID = findViewById<Button>(R.id.btn_hoteles_buscar_id)
         btnBuscarPorID.setOnClickListener {
-            val hotelId = inputId.text.toString().toIntOrNull()
-            if (hotelId != null) {
-                val hotel = hotelDAO.findHotelById(hotelId)
-                if (hotel != null) {
-                    // Update UI with the details of the found hotel
-                    inputNombre.setText(hotel.nombre)
-                    inputDireccion.setText(hotel.direccion)
-                    inputCalificacion.setText(hotel.calificacion.toString())
-                    inputTieneEstacionamiento.isChecked = hotel.tieneEstacionamiento
+            inputId.text.toString().let { hotelId ->
+                if (hotelId.isNotEmpty()) {
+                    hotelDAO.findHotelById(hotelId, { hotel ->
+                        hotel?.let {
+                            inputNombre.setText(it.nombre)
+                            inputDireccion.setText(it.direccion)
+                            inputCalificacion.setText(it.calificacion.toString())
+                            inputTieneEstacionamiento.isChecked = it.tieneEstacionamiento
 
-                    // Load and display associated reservations
-                    val reservas = hotelDAO.loadReservationsForHotel(hotelId)
-                    if (reservas.isNotEmpty()) {
-                        val adapter = ArrayAdapter(
-                            this,
-                            android.R.layout.simple_list_item_1,
-                            reservas.map { it.toString() }
-                        )
-                        listView.adapter = adapter
-                    } else {
-                        mostrarSnackbar("No hay reservas para este hotel")
+                            hotelDAO.loadReservationsForHotel(hotelId, { reservas ->
+                                val adapter = ArrayAdapter(
+                                    this@HotelesActivity,
+                                    android.R.layout.simple_list_item_1,
+                                    reservas.map { reserva -> "Cliente: ${reserva.cliente}, Fecha Entrada: ${reserva.fechaEntrada.toDate()}" }
+                                )
+                                listView.adapter = adapter
+                            }) {
+                                mostrarSnackbar("Error al cargar reservas: ${it.message}")
+                            }
+                        } ?: mostrarSnackbar("Hotel con ID: $hotelId no encontrado")
+                    }) {
+                        mostrarSnackbar("Error al buscar hotel: ${it.message}")
                     }
                 } else {
-                    mostrarSnackbar("Hotel con ID: $hotelId no encontrado")
+                    mostrarSnackbar("Ingrese un ID de hotel válido")
                 }
-            } else {
-                mostrarSnackbar("Ingrese un ID de hotel válido")
             }
         }
 

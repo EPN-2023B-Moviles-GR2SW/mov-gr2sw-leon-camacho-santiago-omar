@@ -1,117 +1,67 @@
 package com.example.deber02_santiagoleon.models.dao
 
-import android.content.ContentValues
 import android.content.Context
-import com.example.deber02_santiagoleon.data.Database
-import com.example.deber02_santiagoleon.data.DatabaseHelper
 import com.example.deber02_santiagoleon.models.entities.Hotel
 import com.example.deber02_santiagoleon.models.entities.Reserva
-import java.text.SimpleDateFormat
+import com.google.firebase.firestore.FirebaseFirestore
 
 class HotelDAO(context: Context?) {
-    private val dbHelper = DatabaseHelper(context)
-    private val dateFormat = SimpleDateFormat("yyyy-MM-dd")
-    fun getAllHotels(): List<Hotel> {
-        val db = dbHelper.readableDatabase
-        val cursor = db.rawQuery("SELECT * FROM Hotel", null)
-        val hotels = mutableListOf<Hotel>()
-
-        if (cursor.moveToFirst()) {
-            do {
-                val hotel = Hotel(
-                    id = cursor.getInt(cursor.getColumnIndexOrThrow("id")),
-                    nombre = cursor.getString(cursor.getColumnIndexOrThrow("nombre")),
-                    direccion = cursor.getString(cursor.getColumnIndexOrThrow("direccion")),
-                    calificacion = cursor.getDouble(cursor.getColumnIndexOrThrow("calificacion")),
-                    tieneEstacionamiento = cursor.getInt(cursor.getColumnIndexOrThrow("tieneEstacionamiento")) > 0,
-                    reservas = null // Reservas are fetched separately and thus initialized as null here
-                )
-                hotels.add(hotel)
-            } while (cursor.moveToNext())
-        }
-        cursor.close()
-        return hotels
+    private val db = FirebaseFirestore.getInstance()
+    private val collectionPath = "hoteles"
+    fun getAllHotels(onSuccess: (List<Hotel>) -> Unit, onFailure: (Exception) -> Unit) {
+        db.collection(collectionPath)
+            .get()
+            .addOnSuccessListener { result ->
+                val hotels = result.toObjects(Hotel::class.java)
+                onSuccess(hotels)
+            }
+            .addOnFailureListener { exception -> onFailure(exception) }
     }
 
-    fun saveHotel(hotel: Hotel) {
-        val db = dbHelper.writableDatabase
-        val values = ContentValues().apply {
-            put("nombre", hotel.nombre)
-            put("direccion", hotel.direccion)
-            put("calificacion", hotel.calificacion)
-            put("tieneEstacionamiento", if (hotel.tieneEstacionamiento) 1 else 0)
-        }
-
-        db.insert("Hotel", null, values)
+    fun saveHotel(hotel: Hotel, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
+        db.collection(collectionPath)
+            .add(hotel)
+            .addOnSuccessListener { onSuccess() }
+            .addOnFailureListener { exception -> onFailure(exception) }
     }
 
-    fun updateHotel(updatedHotel: Hotel) {
-        val db = dbHelper.writableDatabase
-        val values = ContentValues().apply {
-            put("nombre", updatedHotel.nombre)
-            put("direccion", updatedHotel.direccion)
-            put("calificacion", updatedHotel.calificacion)
-            put("tieneEstacionamiento", if (updatedHotel.tieneEstacionamiento) 1 else 0)
-        }
-
-        db.update("Hotel", values, "id = ?", arrayOf(updatedHotel.id.toString()))
+    fun updateHotel(hotelId: String, updatedFields: Map<String, Any>, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
+        db.collection(collectionPath).document(hotelId)
+            .update(updatedFields)
+            .addOnSuccessListener { onSuccess() }
+            .addOnFailureListener { exception -> onFailure(exception) }
     }
 
-    fun deleteHotel(hotelId: Int) {
-        val db = dbHelper.writableDatabase
-        db.delete("Hotel", "id = ?", arrayOf(hotelId.toString()))
+    fun deleteHotel(hotelId: String, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
+        db.collection(collectionPath).document(hotelId)
+            .delete()
+            .addOnSuccessListener { onSuccess() }
+            .addOnFailureListener { exception -> onFailure(exception) }
     }
 
-    fun findHotelById(hotelId: Int): Hotel? {
-        val db = dbHelper.readableDatabase
-        val cursor = db.query(
-            "Hotel", null, "id = ?", arrayOf(hotelId.toString()), null, null, null
-        )
-
-        var hotel: Hotel? = null
-        if (cursor.moveToFirst()) {
-            hotel = Hotel(
-                id = cursor.getInt(cursor.getColumnIndexOrThrow("id")),
-                nombre = cursor.getString(cursor.getColumnIndexOrThrow("nombre")),
-                direccion = cursor.getString(cursor.getColumnIndexOrThrow("direccion")),
-                calificacion = cursor.getDouble(cursor.getColumnIndexOrThrow("calificacion")),
-                tieneEstacionamiento = cursor.getInt(cursor.getColumnIndexOrThrow("tieneEstacionamiento")) > 0,
-                reservas = null // Reservas are fetched separately and thus initialized as null here
-            )
-        }
-        cursor.close()
-        return hotel
+    fun findHotelById(hotelId: String, onSuccess: (Hotel?) -> Unit, onFailure: (Exception) -> Unit) {
+        db.collection(collectionPath).document(hotelId)
+            .get()
+            .addOnSuccessListener { documentSnapshot ->
+                if (documentSnapshot.exists()) {
+                    val hotel = documentSnapshot.toObject(Hotel::class.java)
+                    onSuccess(hotel)
+                } else {
+                    onSuccess(null)
+                }
+            }
+            .addOnFailureListener { exception -> onFailure(exception) }
     }
 
-    fun loadReservationsForHotel(hotelId: Int): MutableList<Reserva> {
-        val db = dbHelper.readableDatabase
-        val reservas = mutableListOf<Reserva>()
-        val cursor = db.query(
-            "Reserva",
-            null, // all columns
-            "hotelId = ?", // selection
-            arrayOf(hotelId.toString()), // selectionArgs
-            null, // groupBy
-            null, // having
-            null  // orderBy
-        )
-
-        if (cursor.moveToFirst()) {
-            do {
-                val reserva = Reserva(
-                    id = cursor.getInt(cursor.getColumnIndexOrThrow("id")),
-                    cliente = cursor.getString(cursor.getColumnIndexOrThrow("cliente")),
-                    fechaEntrada = dateFormat.parse(cursor.getString(cursor.getColumnIndexOrThrow("fechaEntrada"))) ?: throw Exception("Invalid date format"),
-                    fechaSalida = dateFormat.parse(cursor.getString(cursor.getColumnIndexOrThrow("fechaSalida"))) ?: throw Exception("Invalid date format"),
-                    numeroPersonas = cursor.getInt(cursor.getColumnIndexOrThrow("numeroPersonas")),
-                    esCancelable = cursor.getInt(cursor.getColumnIndexOrThrow("esCancelable")) > 0,
-                    hotelId = cursor.getInt(cursor.getColumnIndexOrThrow("hotelId"))
-                )
-                reservas.add(reserva)
-            } while (cursor.moveToNext())
-        }
-        cursor.close()
-
-        return reservas
+    fun loadReservationsForHotel(hotelId: String, onSuccess: (List<Reserva>) -> Unit, onFailure: (Exception) -> Unit) {
+        db.collection(collectionPath).document(hotelId).collection("reservas")
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+                val reservas = querySnapshot.toObjects(Reserva::class.java)
+                onSuccess(reservas)
+            }
+            .addOnFailureListener { exception ->
+                onFailure(exception)
+            }
     }
 }

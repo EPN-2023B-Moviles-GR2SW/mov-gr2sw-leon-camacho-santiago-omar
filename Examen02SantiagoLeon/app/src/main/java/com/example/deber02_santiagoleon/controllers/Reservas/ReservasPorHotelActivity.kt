@@ -9,6 +9,8 @@ import android.widget.ListView
 import com.example.deber02_santiagoleon.R
 import com.example.deber02_santiagoleon.models.dao.ReservaDAO
 import com.google.android.material.snackbar.Snackbar
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class ReservasPorHotelActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,17 +21,26 @@ class ReservasPorHotelActivity : AppCompatActivity() {
         val inputHotelID = findViewById<EditText>(R.id.input_buscar_reservas_ID_hotel)
         val btnBuscar = findViewById<Button>(R.id.btn_buscar_reservas_ID_hotel)
         val listView = findViewById<ListView>(R.id.lv_PorHotel_reservas)
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
 
         btnBuscar.setOnClickListener {
-            val hotelId = inputHotelID.text.toString().toIntOrNull()
-            if (hotelId != null) {
-                val reservasList = reservaDAO.getReservationsByHotelId(hotelId)
-                if (reservasList.isNotEmpty()) {
-                    val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, reservasList.map { it.toString() })
+            val hotelId = inputHotelID.text.toString()
+            if (hotelId.isNotEmpty()) {
+                reservaDAO.getReservationsByHotelId(hotelId, { reservas ->
+                    // onSuccess
+                    val formattedReservas = reservas.map { reserva ->
+                        "Cliente: ${reserva.cliente}, " +
+                                "Entrada: ${dateFormat.format(reserva.fechaEntrada.toDate())}, " +
+                                "Salida: ${dateFormat.format(reserva.fechaSalida.toDate())}, " +
+                                "Personas: ${reserva.numeroPersonas}, " +
+                                "Cancelable: ${if (reserva.esCancelable) "Sí" else "No"}"
+                    }
+                    val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, formattedReservas)
                     listView.adapter = adapter
-                } else {
-                    mostrarSnackbar("No existen reservas para el hotel con ID: $hotelId")
-                }
+                }, { exception ->
+                    // onFailure
+                    mostrarSnackbar("Error al cargar reservas: ${exception.message}")
+                })
             } else {
                 mostrarSnackbar("Ingrese un ID de hotel válido")
             }
